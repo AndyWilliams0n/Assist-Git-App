@@ -1,1 +1,19 @@
 # Assist-Git-App
+
+Scoped replica focused on Workspace + Git flows.
+
+## Project layout
+- `app/`: FastAPI backend for workspace, git, and provider integrations.
+- `ui/`: React + Vite + shadcn frontend exposing only `Workspace` and `Git`.
+
+## Environment
+- Frontend: configure `ui/.env` from `ui/.env.example` (`VITE_API_BASE_URL` required).
+- Backend token resolution precedence:
+1. Provider token saved in settings (`/api/github/settings`, `/api/gitlab/settings`)
+2. Provider env vars (`GITHUB_TOKEN`, `GITLAB_TOKEN`)
+3. Shared PAT env var (`GIT_SHARED_PAT`, optional alias `ASSIST_GIT_PAT`)
+
+## CLI prerequisites
+- `git` is required for workspace clone and git actions.
+- `gh` and `glab` are optional but required for platform-specific PR/MR flows.
+- Missing tools return explicit API errors with installation guidance.

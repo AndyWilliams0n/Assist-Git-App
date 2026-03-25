@@ -1,0 +1,52 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${workspaceFolder}"
+      ]
+    },
+    "browser": {
+      "command": "npx",
+      "protocol": "line_json",
+      "args": [
+        "-y",
+        "@playwright/mcp"
+      ]
+    },
+    "brave-search": {
+      "command": "npx",
+      "protocol": "line_json",
+      "args": ["-y", "@brave/brave-search-mcp-server", "--transport", "stdio"],
+      "env": {
+        "BRAVE_API_KEY": "BSAvtwlTB4IzJmgmM97zD2zggjRKXMm"
+      }
+    },
+    "assist-brain": {
+      "type": "http",
+      "url": "https://ulhgbgyzjsxeyxjahcqj.supabase.co/functions/v1/assist-brain-mcp",
+      "headers": {
+        "x-brain-key": "${ASSIST_BRAIN_MCP_ACCESS_KEY}"
+      }
+    }
+  },
+  "tooling": {
+    "filesystem": {
+      "server": "filesystem"
+    },
+    "search": {
+      "server": "brave-search",
+      "tool": "brave_web_search"
+    },
+    "fetch": {
+      "server": "browser"
+    },
+    "memory": {
+      "server": "assist-brain",
+      "search_tool": "search_thoughts",
+      "capture_tool": "capture_thought"
+    }
+  }
+}

@@ -1,0 +1,1018 @@
+{
+  "llm": {
+    "providers": {
+      "openai": {
+        "model": "gpt-5.4-mini"
+      },
+      "anthropic": {
+        "model": "claude-4-6-sonnet-latest",
+        "max_tokens": 4000
+      }
+    },
+    "functions": {
+      "jira_description_generation": {
+        "openai_model": "gpt-5.4-mini",
+        "anthropic_model": "claude-4-6-sonnet-latest"
+      },
+      "git_content_generation": {
+        "openai_model": "gpt-5.4-mini",
+        "anthropic_model": "claude-4-6-sonnet-latest"
+      }
+    }
+  },
+  "vision": {
+    "model": "gpt-5.4-mini",
+    "max_images_per_turn": 2,
+    "max_image_bytes": 8388608,
+    "timeout_seconds": 20
+  },
+  "agents": {
+    "orchestrator": {
+      "model": "gpt-5.4-mini"
+    },
+    "planner": {
+      "model": "gpt-5.4-mini"
+    },
+    "research": {
+      "model": "gpt-5.4-mini"
+    },
+    "jira_api": {
+      "bypass": false
+    },
+    "git_content": {
+      "model": "gpt-5.4-mini"
+    },
+    "code_builder_codex": {
+      "model": "gpt-5.3-codex",
+      "bypass": false
+    },
+    "code_review": {
+      "model": "gpt-5.3-codex",
+      "bypass": false
+    },
+    "cli_agent": {
+      "model": "gpt-5.4-mini"
+    },
+    "logging_agent": {
+      "model": "gpt-5.4-mini"
+    }
+  },
+  "git_workflow": {
+    "workflows": {
+      "chat": {
+        "settings": {
+          "defaultBranch": "__active_workspace_branch__",
+          "branchNamePattern": "feature/{description}",
+          "commitMessagePattern": "feat: {description}",
+          "prTitlePattern": "feat: {description}",
+          "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- \n\n## Test Plan\n\n- ",
+          "platform": "auto",
+          "autoDetect": true,
+          "autoPushOnCommit": false
+        },
+        "phases": [
+          {
+            "id": "initial",
+            "label": "Pre-Intent / Pipeline Start",
+            "description": "Runs before Chat Intent Router or before Pipeline Agent starts a task run.",
+            "agentName": [
+              "Orchestrator Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "play",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "{ticket}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "main",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "planning",
+            "label": "Pre-Code Builder",
+            "description": "Runs after planning/SDD generation and before Code Builder Codex.",
+            "agentName": [
+              "Planner Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "clipboard",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "{ticket}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "main",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "build",
+            "label": "Pre-Code Review",
+            "description": "Runs after Code Builder output and before Code Review Agent (or review-equivalent checkpoint).",
+            "agentName": "Code Builder Codex",
+            "icon": "code",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "main",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "review",
+            "label": "Pre-Complete Result",
+            "description": "Runs after Code Review and before final Orchestrator/Pipeline completion handoff.",
+            "agentName": "Code Review Agent",
+            "icon": "search",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat({ticket}): {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": true,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "complete",
+            "label": "Complete",
+            "description": "Final terminal state for chat or pipeline workflow.",
+            "agentName": [
+              "Orchestrator Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "check",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "main",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          }
+        ]
+      },
+      "pipeline": {
+        "settings": {
+          "defaultBranch": "main",
+          "branchNamePattern": "feature/{description}",
+          "commitMessagePattern": "feat: {description}",
+          "prTitlePattern": "feat: {description}",
+          "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- \n\n## Test Plan\n\n- ",
+          "platform": "auto",
+          "autoDetect": true,
+          "autoPushOnCommit": false
+        },
+        "phases": [
+          {
+            "id": "initial",
+            "label": "Pre-Intent / Pipeline Start",
+            "description": "Runs before Chat Intent Router or before Pipeline Agent starts a task run.",
+            "agentName": [
+              "Orchestrator Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "play",
+            "gitAction": {
+              "type": "fetch",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "planning",
+            "label": "Pre-Code Builder",
+            "description": "Runs after planning/SDD generation and before Code Builder Codex.",
+            "agentName": [
+              "Planner Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "clipboard",
+            "gitAction": {
+              "type": "create_branch",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "build",
+            "label": "Pre-Code Review",
+            "description": "Runs after Code Builder output and before Code Review Agent (or review-equivalent checkpoint).",
+            "agentName": "Code Builder Codex",
+            "icon": "code",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "review",
+            "label": "Pre-Complete Result",
+            "description": "Runs after Code Review and before final Orchestrator/Pipeline completion handoff.",
+            "agentName": "Code Review Agent",
+            "icon": "search",
+            "gitAction": {
+              "type": "commit",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "create_pr",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "commit",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "push",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "complete",
+            "label": "Complete",
+            "description": "Final terminal state for chat or pipeline workflow.",
+            "agentName": [
+              "Orchestrator Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "check",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          }
+        ]
+      },
+      "pipeline_spec": {
+        "settings": {
+          "defaultBranch": "main",
+          "branchNamePattern": "feature/{description}",
+          "commitMessagePattern": "feat: {description}",
+          "prTitlePattern": "feat: {description}",
+          "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- \n\n## Test Plan\n\n- ",
+          "platform": "auto",
+          "autoDetect": true,
+          "autoPushOnCommit": false
+        },
+        "phases": [
+          {
+            "id": "initial",
+            "label": "Pre-Intent / Pipeline SPEC Start",
+            "description": "Runs before Pipeline Agent starts a SPEC task run.",
+            "agentName": [
+              "Orchestrator Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "play",
+            "gitAction": {
+              "type": "fetch",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "planning",
+            "label": "Pre-Code Builder",
+            "description": "Runs before Code Builder Codex for SPEC task execution.",
+            "agentName": [
+              "Planner Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "clipboard",
+            "gitAction": {
+              "type": "create_branch",
+              "enabled": true,
+              "branchNamePattern": "{ticket}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "build",
+            "label": "Pre-Code Review",
+            "description": "Runs after Code Builder output and before Code Review Agent (or review-equivalent checkpoint).",
+            "agentName": "Code Builder Codex",
+            "icon": "code",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "review",
+            "label": "Pre-Complete Result",
+            "description": "Runs after Code Review and before final Orchestrator/Pipeline completion handoff.",
+            "agentName": "Code Review Agent",
+            "icon": "search",
+            "gitAction": {
+              "type": "commit",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "create_pr",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "commit",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "push",
+              "enabled": true,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          },
+          {
+            "id": "complete",
+            "label": "Complete",
+            "description": "Final terminal state for SPEC pipeline workflow.",
+            "agentName": [
+              "Orchestrator Agent",
+              "Pipeline Agent"
+            ],
+            "icon": "check",
+            "gitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "secondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            },
+            "subtaskSecondaryGitAction": {
+              "type": "none",
+              "enabled": false,
+              "branchNamePattern": "feature/{description}",
+              "reuseExistingBranch": true,
+              "commitMessagePattern": "feat: {description}",
+              "targetBranch": "",
+              "prTitlePattern": "feat: {description}",
+              "prBodyTemplate": "## Summary\n\n{description}\n\n## Changes\n\n- ",
+              "draft": false,
+              "pushBeforePr": true,
+              "customCommand": ""
+            }
+          }
+        ]
+      }
+    }
+  }
+}
