@@ -27,3 +27,9 @@ Removed domains: Jira, pipelines/workflows/orchestrator, SDD/spec routes, Slack,
 - `git` is required for workspace clone and git actions.
 - `gh` and `glab` are optional but required for platform-specific PR/MR flows.
 - Missing tools return explicit API errors with installation guidance.
+
+## Repository hygiene
+- Detect pycache-only directories in scoped roots:
+  - `python3 scripts/cleanup_pycache_only_dirs.py --root .assist/specs/GIT-1-2 --root app --dry-run`
+- Remove pycache-only directories in scoped roots:
+  - `python3 scripts/cleanup_pycache_only_dirs.py --root .assist/specs/GIT-1-2 --root app --delete`
