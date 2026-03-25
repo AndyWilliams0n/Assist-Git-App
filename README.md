@@ -6,6 +6,16 @@ Scoped replica focused on Workspace + Git flows.
 - `app/`: FastAPI backend for workspace, git, and provider integrations.
 - `ui/`: React + Vite + shadcn frontend exposing only `Workspace` and `Git`.
 
+## Retained API surface
+- `/health`
+- `/api/git/*`
+- `/api/workspaces*`
+- `/api/github/*`
+- `/api/gitlab/*`
+- `/api/fs/tree`, `/api/fs/mkdir`, `/api/fs/rename`, `/api/fs/rmdir` (used by workspace folder picker)
+
+Removed domains: Jira, pipelines/workflows/orchestrator, SDD/spec routes, Slack, and Stitch.
+
 ## Environment
 - Frontend: configure `ui/.env` from `ui/.env.example` (`VITE_API_BASE_URL` required).
 - Backend token resolution precedence:

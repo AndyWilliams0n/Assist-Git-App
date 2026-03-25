@@ -1,5 +1,4 @@
 import * as React from "react"
-import { useChatStore } from "@/features/chat/store/chat-store"
 import type { Workspace } from "../types"
 import { useWorkspaceStore } from "../store/workspace-store"
 import { useDashboardSettingsStore } from "@/shared/store/dashboard-settings"
@@ -25,7 +24,6 @@ export function useWorkspaces() {
   } =
     useWorkspaceStore()
   const setWorkspacePath = useDashboardSettingsStore((s) => s.setPrimaryWorkspacePath)
-  const setWorkspaceRoot = useChatStore((s) => s.setWorkspaceRoot)
 
   const fetchWorkspaces = React.useCallback(async () => {
     setLoading(true)
@@ -65,7 +63,6 @@ export function useWorkspaces() {
         selected?.path ??
         ""
       setWorkspacePath(nextWorkspacePath)
-      setWorkspaceRoot(nextWorkspacePath)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error")
     } finally {
@@ -79,7 +76,6 @@ export function useWorkspaces() {
     setLoading,
     setSelectedWorkspaceId,
     setWorkspacePath,
-    setWorkspaceRoot,
     setWorkspaces,
   ])
 
@@ -111,14 +107,12 @@ export function useWorkspaces() {
       setActiveWorkspaceId(activeWorkspace.id)
       setSelectedWorkspaceId(activeWorkspace.id)
       setWorkspacePath(activeWorkspace.path)
-      setWorkspaceRoot(activeWorkspace.path)
       return activeWorkspace
     },
     [
       setActiveWorkspaceId,
       setSelectedWorkspaceId,
       setWorkspacePath,
-      setWorkspaceRoot,
       setPrimaryWorkspaceId,
       workspaces,
       setWorkspaces,
@@ -154,7 +148,6 @@ export function useWorkspaces() {
         setActiveWorkspaceId(null)
         setSelectedWorkspaceId(null)
         setWorkspacePath("")
-        setWorkspaceRoot("")
         return
       }
 
@@ -164,7 +157,6 @@ export function useWorkspaces() {
 
         const nextWorkspacePath = nextSelected?.path ?? ""
         setWorkspacePath(nextWorkspacePath)
-        setWorkspaceRoot(nextWorkspacePath)
       }
     },
     [
@@ -175,7 +167,6 @@ export function useWorkspaces() {
       setSecondaryWorkspaceId,
       setSelectedWorkspaceId,
       setWorkspacePath,
-      setWorkspaceRoot,
       workspaces,
       setWorkspaces,
     ]
@@ -192,7 +183,6 @@ export function useWorkspaces() {
       setActiveWorkspaceId(id)
       setSelectedWorkspaceId(id)
       setWorkspacePath(ws.path)
-      setWorkspaceRoot(ws.path)
       return ws
     },
     [
@@ -202,7 +192,6 @@ export function useWorkspaces() {
       setPrimaryWorkspaceId,
       setSelectedWorkspaceId,
       setWorkspacePath,
-      setWorkspaceRoot,
     ]
   )
 

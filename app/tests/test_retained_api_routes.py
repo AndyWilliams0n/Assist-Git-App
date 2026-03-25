@@ -13,6 +13,7 @@ from app.main import app
 def test_required_workspace_git_and_provider_routes_are_registered():
     paths = {route.path for route in app.routes}
 
+    assert "/health" in paths
     assert "/api/workspaces" in paths
     assert "/api/workspaces/active-config" in paths
     assert "/api/git/status" in paths
@@ -21,6 +22,34 @@ def test_required_workspace_git_and_provider_routes_are_registered():
     assert "/api/github/repos" in paths
     assert "/api/gitlab/settings" in paths
     assert "/api/gitlab/repos" in paths
+
+
+def test_removed_route_groups_are_not_registered():
+    paths = {route.path for route in app.routes}
+
+    removed_prefixes = [
+        "/api/jira",
+        "/api/pipelines",
+        "/api/orchestrator",
+        "/api/sdd",
+        "/api/spec-tasks",
+        "/api/stitch",
+        "/api/slack",
+    ]
+    explicitly_removed_paths = [
+        "/api/agents",
+        "/api/agents/stream",
+        "/api/agents/bypass",
+        "/api/workflows",
+        "/api/tickets/available",
+        "/api/conversations",
+        "/api/connection/stream",
+    ]
+
+    for path in paths:
+        assert not any(path.startswith(prefix) for prefix in removed_prefixes)
+    for path in explicitly_removed_paths:
+        assert path not in paths
 
 
 def test_github_repos_returns_actionable_token_error_without_config(monkeypatch):
