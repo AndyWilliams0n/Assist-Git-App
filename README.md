@@ -17,7 +17,12 @@ Scoped replica focused on Workspace + Git flows.
 Removed domains: Jira, pipelines/workflows/orchestrator, SDD/spec routes, Slack, and Stitch.
 
 ## Environment
-- Frontend: configure `ui/.env` from `ui/.env.example` (`VITE_API_BASE_URL` required).
+- Backend: configure root `.env` from `.env.example`.
+  - `cp .env.example .env`
+  - Fill in provider credentials as needed (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GITHUB_TOKEN`, `GITLAB_TOKEN`, or shared PAT vars below).
+- Frontend: configure `ui/.env` from `ui/.env.example`.
+  - `cp ui/.env.example ui/.env`
+  - `VITE_API_BASE_URL` is required.
 - Backend token resolution precedence:
 1. Provider token saved in settings (`/api/github/settings`, `/api/gitlab/settings`)
 2. Provider env vars (`GITHUB_TOKEN`, `GITLAB_TOKEN`)
